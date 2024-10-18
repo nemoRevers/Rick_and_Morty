@@ -1,3 +1,5 @@
+import 'package:data/data.dart';
+
 import '../../domain.dart';
 import 'use_case.dart';
 
