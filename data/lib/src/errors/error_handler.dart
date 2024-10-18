@@ -8,37 +8,38 @@ class ErrorHandler {
     required AppEventNotifier eventNotifier,
   }) : _eventNotifier = eventNotifier;
 
-  Future<Never> handleError(DioException error) async {
+  AppException handleError(DioException error) {
     final Response<dynamic>? response = error.response;
 
     if (response == null) {
-      throw const AppException('empty response');
+      return const AppException('empty response');
     }
 
     if (error.type == DioExceptionType.connectionError) {
       _eventNotifier.notify(const InternetConnectionLostEvent());
-      throw const AppException('no connection');
+      return const AppException('no connection');
     }
 
     final int? statusCode = response.statusCode;
     switch (statusCode) {
       case 400:
         {
-          throw AppException(
+          return AppException(
               error.response?.data['message'] ?? 'empty message');
         }
       case 401:
         {
           _eventNotifier.notify(const UnauthorizedEvent());
-          throw AppException(error.response?.data['message'] ?? 'no auth');
+          return AppException(error.response?.data['message'] ?? 'no auth');
         }
       case 500:
         {
-          throw AppException(error.response?.data['message'] ?? 'server error');
+          return AppException(
+              error.response?.data['message'] ?? 'server error');
         }
       default:
         {
-          throw const AppException.unknown();
+          return const AppException.unknown();
         }
     }
   }

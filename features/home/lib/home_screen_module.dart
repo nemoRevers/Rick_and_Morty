@@ -1,8 +1,10 @@
+import 'package:flutter/material.dart';
 import 'package:navigation/navigation.dart';
 
-import 'src/screens/splash.dart';
+import 'src/screens/details_screen.dart';
+import 'src/screens/home_screen.dart';
 
-part 'splash_screen_module.gm.dart';
+part 'home_screen_module.gm.dart';
 
 @AutoRouterConfig.module(replaceInRouteName: 'Screen|Page,Route')
-class SplashScreenModule extends _$SplashScreenModule {}
+class HomeScreenModule extends _$HomeScreenModule {}

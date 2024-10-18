@@ -18,6 +18,8 @@ dependencies:
     path: ./core_ui
   data:
     path: ./data
+  home_screen:
+    path: ./features/home
   navigation:
     path: ./navigation
 
@@ -26,8 +28,14 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
+  flutter_launcher_icons: ^0.14.1
   flutter_lints: ^3.0.0
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  remove_alpha_ios: true
+  image_path: "core_ui/resources/icons8-rick-und-morty-color-2/icons8-rick-und-morty-480.png"
 
 flutter:
   uses-material-design: true

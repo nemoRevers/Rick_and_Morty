@@ -1,4 +1,5 @@
 import 'package:core/core.dart';
+import 'package:domain/domain.dart';
 
 import '../../data.dart';
 
@@ -21,15 +22,27 @@ abstract class DataDI {
         eventNotifier: locator<AppEventNotifier>(),
       ),
     );
+  }
 
-    locator.registerLazySingleton<ApiProvider>(
-      () => ApiProvider(
-        locator<DioConfig>().dio,
+  static void _initProviders(GetIt locator) {
+    appLocator.registerLazySingleton<ApiProvider>(
+      () => ApiProviderImpl(
+        appLocator<DioConfig>().dio,
+        appLocator<ErrorHandler>(),
       ),
     );
   }
 
-  static void _initProviders(GetIt locator) {}
-
-  static void _initRepositories(GetIt locator) {}
+  static void _initRepositories(GetIt locator) {
+    appLocator.registerLazySingleton<CharacterRepository>(
+      () => CharacterRepositoryImpl(
+        appLocator<ApiProvider>(),
+      ),
+    );
+    appLocator.registerLazySingleton<EpisodeRepository>(
+      () => EpisodeRepositoryImpl(
+        appLocator<ApiProvider>(),
+      ),
+    );
+  }
 }

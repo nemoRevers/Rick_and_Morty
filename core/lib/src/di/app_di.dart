@@ -10,5 +10,6 @@ abstract class AppDI {
     locator.registerSingleton<AppConfig>(
       AppConfig.fromFlavor(flavor),
     );
+    locator.registerLazySingleton<AppEventNotifier>(AppEventBus.new);
   }
 }

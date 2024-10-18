@@ -1,12 +1,12 @@
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
-import 'package:domain/domain.dart';
+import 'package:data/data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:navigation/navigation.dart';
 
 import '../mobx/characters_store.dart';
-import '../widgets/character_card.dart';
+import '../widgets/character_card_widget.dart';
 
 @RoutePage()
 class HomeScreen extends StatefulWidget {
@@ -21,9 +21,9 @@ class _HomeScreenState extends State<HomeScreen> {
   final ScrollController _scrollController = ScrollController();
 
   @override
-  void initState() {
-    super.initState();
-    charactersStore = CharactersStore(appLocator<FetchCharacters>());
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    charactersStore = Provider.of<CharactersStore>(context);
     charactersStore.loadCharacters();
 
     _scrollController.addListener(_onScroll);
@@ -49,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
         title: const RickLogo(),
       ),
       body: Observer(
-        builder: (_) {
+        builder: (BuildContext context) {
           if (charactersStore.characters.isEmpty && charactersStore.isLoading) {
             return const Center(child: CircularProgressIndicator());
           }
@@ -71,17 +71,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   horizontal: 16.0,
                   vertical: 8.0,
                 ),
-                child: InkWell(
-                  onTap: () {},
-                  child: CharacterCard(
-                    id: character.id,
-                    name: character.name,
-                    status: character.status,
-                    species: character.species,
-                    type: character.type,
-                    gender: character.gender,
-                    image: character.image,
-                  ),
+                child: CharacterCard(
+                  id: character.id,
+                  name: character.name,
+                  status: character.status,
+                  species: character.species,
+                  type: character.type,
+                  gender: character.gender,
+                  image: character.image,
                 ),
               );
             },

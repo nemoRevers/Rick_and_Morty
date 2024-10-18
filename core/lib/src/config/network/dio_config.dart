@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
+
 import '../app_config.dart';
 import 'interceptors/dio_log_interceptor.dart';
 
@@ -19,12 +20,15 @@ class DioConfig {
   DioConfig({required this.appConfig}) {
     _dio
       ..options.baseUrl = appConfig.baseUrl
-      ..interceptors.addAll(<Interceptor>[
-        RequestInterceptor(_dio, headers),
-        ErrorInterceptor(_dio),
-        ResponseInterceptor(_dio),
-        dioLoggerInterceptor,
-      ]);
+      ..interceptors.addAll(
+        <Interceptor>[
+          RequestInterceptor(_dio, headers),
+          ErrorInterceptor(_dio),
+          ResponseInterceptor(_dio),
+          if (const String.fromEnvironment('ENV') == 'DEV')
+            dioLoggerInterceptor,
+        ],
+      );
   }
 
   Map<String, String> headers = <String, String>{};

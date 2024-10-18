@@ -5,8 +5,16 @@ import '../../core_ui.dart';
 const LightColors _appColors = LightColors();
 
 final ThemeData lightTheme = ThemeData.light().copyWith(
-  // appBarTheme: _getAppBarTheme(),
   scaffoldBackgroundColor: _appColors.white,
+  cardTheme: CardTheme(color: _appColors.secondaryBg),
+  indicatorColor: _appColors.secondaryBg,
+  appBarTheme: AppBarTheme(
+    backgroundColor: _appColors.secondaryBg,
+    foregroundColor: _appColors.white,
+  ),
+  bottomNavigationBarTheme: BottomNavigationBarThemeData(
+    backgroundColor: _appColors.secondaryBg,
+  ),
   textTheme: _getTextTheme(),
   inputDecorationTheme: _getInputDecorationTheme(),
   primaryColor: _appColors.primaryBg,
@@ -21,7 +29,7 @@ TextTheme _getTextTheme() {
     titleMedium: AppFonts.normal13,
     bodyMedium: AppFonts.normal13,
   ).apply(
-    bodyColor: _appColors.primaryBg,
+    bodyColor: _appColors.secondaryBg,
     displayColor: _appColors.primaryBg,
   );
 }

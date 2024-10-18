@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../../domain.dart';
+import '../character/character_model.dart';
+import '../info/info_model.dart';
 
 part 'characters_model.freezed.dart';
 part 'characters_model.g.dart';

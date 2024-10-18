@@ -46,9 +46,11 @@ ios/build
 android/build
 android/app/build
 **/*.g.dart
+**/*.freezed.dart
 **/*.gm.dart
 **/*.graphql.dart
 **/*.gr.dart
 *.env
 
 .vscode
+/.run/

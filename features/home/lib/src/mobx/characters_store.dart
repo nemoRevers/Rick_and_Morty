@@ -1,7 +1,8 @@
-import 'package:core_ui/core_ui.dart';
-import 'package:domain/domain.dart'; // Импортируйте вашу модель
+import 'package:data/data.dart';
+import 'package:domain/domain.dart';
+import 'package:mobx/mobx.dart';
 
-part 'character_store.g.dart';
+part 'characters_store.g.dart'; // Для генерации
 
 class CharactersStore = _CharactersStore with _$CharactersStore;
 
@@ -11,10 +12,38 @@ abstract class _CharactersStore with Store {
   _CharactersStore(this.fetchCharacters);
 
   @observable
-  CharactersModel? model;
+  ObservableList<CharacterModel> characters = ObservableList<CharacterModel>();
+
+  @observable
+  bool isLoading = false;
+
+  @observable
+  int currentPage = 1;
+
+  @observable
+  bool hasMore = true;
 
   @action
-  Future<void> loadCharacters(int page) async {
-    model = await fetchCharacters.execute(page);
+  Future<void> loadCharacters() async {
+    if (isLoading || !hasMore) return;
+
+    isLoading = true;
+
+    try {
+      final CharactersModel response =
+          await fetchCharacters.execute(currentPage);
+      if (response.results != null &&
+          response.results!.isNotEmpty &&
+          response.info!.count != currentPage) {
+        characters.addAll(response.results!);
+        currentPage++;
+      } else {
+        hasMore = false;
+      }
+    } catch (error) {
+      // Обработка ошибок
+    } finally {
+      isLoading = false;
+    }
   }
 }
