@@ -28,6 +28,11 @@ class CharacterCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final BorderRadiusGeometry clipRadius =
+        (Theme.of(context).cardTheme.shape as RoundedRectangleBorder?)
+                ?.borderRadius ??
+            BorderRadius.zero;
+
     return Card(
       elevation: 4,
       margin: const EdgeInsets.all(16),
@@ -42,10 +47,7 @@ class CharacterCard extends StatelessWidget {
           children: <Widget>[
             image != null
                 ? ClipRRect(
-                    borderRadius: (Theme.of(context).cardTheme.shape
-                                as RoundedRectangleBorder?)
-                            ?.borderRadius ??
-                        BorderRadius.zero,
+                    borderRadius: clipRadius,
                     child: Image.network(
                       image!,
                       height: 200,
