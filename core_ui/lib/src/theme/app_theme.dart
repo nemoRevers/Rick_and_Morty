@@ -6,7 +6,12 @@ const LightColors _appColors = LightColors();
 
 final ThemeData lightTheme = ThemeData.light().copyWith(
   scaffoldBackgroundColor: _appColors.white,
-  cardTheme: CardTheme(color: _appColors.secondaryBg),
+  cardTheme: CardTheme(
+    color: _appColors.secondaryBg,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(AppDimens.BORDER_RADIUS_18),
+    ),
+  ),
   indicatorColor: _appColors.secondaryBg,
   appBarTheme: AppBarTheme(
     backgroundColor: _appColors.secondaryBg,

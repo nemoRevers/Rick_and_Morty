@@ -41,11 +41,17 @@ class CharacterCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             image != null
-                ? Image.network(
-                    image!,
-                    height: 200,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
+                ? ClipRRect(
+                    borderRadius: (Theme.of(context).cardTheme.shape
+                                as RoundedRectangleBorder?)
+                            ?.borderRadius ??
+                        BorderRadius.zero,
+                    child: Image.network(
+                      image!,
+                      height: 200,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                    ),
                   )
                 : const RickLogo(),
             Padding(
